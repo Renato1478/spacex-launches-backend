@@ -1,0 +1,15 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgresdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: spacexusername
+      POSTGRES_PASSWORD: spacexpassword
+      POSTGRES_DB: spacexdb # Nome do banco de dados
+volumes:
+  postgres_data:

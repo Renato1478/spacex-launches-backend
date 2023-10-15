@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Rocket {
+  id       String   @id @default(cuid()) @map("_id")
+  spacexId String   @unique
+  name     String
+  launches Launch[]
+}
+
+model Launch {
+  id           String   @id @default(cuid()) @map("_id")
+  spacexId     String   @unique
+  flightNumber Int
+  name         String
+  success      Boolean
+  rocketId     String
+  launchDate   DateTime
+  reused       Boolean
+  youtubeId    String?
+  rocket       Rocket   @relation(fields: [rocketId], references: [id])
+}
