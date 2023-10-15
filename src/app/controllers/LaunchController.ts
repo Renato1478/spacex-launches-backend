@@ -3,13 +3,9 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { PrismaClient } from "@prisma/client";
 
 import { IPaginate } from "../../types/pagination";
+import { ListLaunchesRequestOptions } from "../schemas/launchSchema";
 
 const prisma = new PrismaClient();
-
-interface IQueryIndexOptions {
-  search: string;
-  limit: string;
-}
 
 interface IWhereStatement {
   OR?: any;
@@ -18,14 +14,16 @@ interface IWhereStatement {
 class LaunchesController {
   async index(
     request: FastifyRequest<{
-      Querystring: IQueryIndexOptions;
+      Querystring: ListLaunchesRequestOptions;
     }>,
     reply: FastifyReply
   ) {
     try {
       const { search, limit } = request.query; // Obtenha os parâmetros da consulta
+      let { page } = request.query;
 
-      const perPage = limit ? parseInt(limit) : 10; // Padrão para 10 resultados por página
+      const perPage = limit ? limit : 10; // Padrão para 10 resultados por página
+      if (!page) page = 1; // Padrão para página 1
 
       // Construa a consulta do Prisma com base no parâmetro de pesquisa
       const where: IWhereStatement = {};
@@ -41,10 +39,10 @@ class LaunchesController {
       const launches = await prisma.launch.findMany({
         where,
         take: perPage,
+        skip: perPage * (page - 1),
       });
 
-      const totalDocs = launches.length;
-      const page = 1; // Página atual
+      const totalDocs = await prisma.launch.count({ where });
       const totalPages = Math.ceil(totalDocs / perPage);
       const hasNext = page < totalPages;
       const hasPrev = page > 1;

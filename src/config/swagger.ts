@@ -1,5 +1,7 @@
 import { FastifySwaggerUiOptions } from "@fastify/swagger-ui";
 
+import { version } from "../../package.json";
+
 export const fastifySwaggerUiOptions: FastifySwaggerUiOptions = {
   routePrefix: "/docs",
   theme: {
@@ -23,4 +25,14 @@ export const fastifySwaggerUiOptions: FastifySwaggerUiOptions = {
     return swaggerObject;
   },
   transformSpecificationClone: true,
+};
+
+export const fastifySwaggerOptions = {
+  openapi: {
+    info: {
+      title: "SpaceX API - Coodesh Challenge",
+      description: "API for listing SpaceX information",
+      version: version,
+    },
+  },
 };

@@ -1,6 +1,6 @@
 import cron from "node-cron";
 
-import { updateDatabaseService } from "../services/updateDatabase.service";
+import { updateDatabaseService } from "../services/updateDatabaseService";
 
 cron.schedule("0 9 * * *", updateDatabaseService, {
   scheduled: true,
