@@ -68,7 +68,7 @@ const updateLaunchesService = async () => {
             name: launchData.name,
             success: launchData.success ? true : false,
             launchDate: new Date(launchData.date_utc),
-            youtubeId: launchData.youtube_id,
+            youtubeId: launchData.links.youtube_id,
             reused: wasReused,
             flightNumber: launchData.flight_number,
             rocket: {
@@ -80,7 +80,7 @@ const updateLaunchesService = async () => {
             spacexId: launchData.id,
             success: launchData.success ? true : false,
             launchDate: new Date(launchData.date_utc),
-            youtubeId: launchData.youtube_id,
+            youtubeId: launchData.links.youtube_id,
             reused: wasReused,
             flightNumber: launchData.flight_number,
             rocket: {
