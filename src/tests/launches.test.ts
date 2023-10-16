@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
 
-import app from "../src/app";
+import app from "../app";
 
 test("list launches", async () => {
   const response = await app.inject({

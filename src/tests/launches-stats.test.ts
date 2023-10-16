@@ -1,6 +1,6 @@
 import { afterAll, expect, test } from "vitest";
 
-import app from "../src/app";
+import app from "../app";
 
 test("get launches stats", async () => {
   const response = await app.inject({
