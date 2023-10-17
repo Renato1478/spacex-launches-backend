@@ -27,7 +27,10 @@ class LaunchesStatsController {
       const launchesByYear: ILaunchesByRecord = {};
       for (const launch of launches) {
         const year = new Date(launch.launchDate).getFullYear();
-        const rocketName = launch.rocket.name;
+        let rocketName = launch.rocket.name;
+        if (launch.reused) {
+          rocketName = "Used " + rocketName;
+        }
 
         if (!launchesByYear[year]) {
           launchesByYear[year] = {};
@@ -44,7 +47,6 @@ class LaunchesStatsController {
       const launchesByRocket: IQttByKey = {};
       for (const launch of launches) {
         let rocketName = launch.rocket.name;
-
         if (launch.reused) {
           rocketName = "Used " + rocketName;
         }
