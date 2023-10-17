@@ -1,5 +1,7 @@
 import fastify from "fastify";
 
+import cors from "@fastify/cors";
+
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 
@@ -26,6 +28,11 @@ import {
 
 // ** App
 const app = fastify({ logger: true });
+
+app.register(cors, {
+  origin: process.env.APP_FRONT_URL || "http://localhost:3000", // Substitua pela URL do seu aplicativo React
+  methods: ["GET", "POST"], // Métodos permitidos
+});
 
 // ** Add Schemas
 for (const schema of [...launchSchemas, ...launchesStatsSchema]) {
