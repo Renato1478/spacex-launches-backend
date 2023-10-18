@@ -17,6 +17,7 @@ model Rocket {
 model Launch {
   id           String   @id @default(cuid()) @map("_id")
   spacexId     String   @unique
+  missionPatch String?
   flightNumber Int
   name         String
   success      Boolean
@@ -24,5 +25,6 @@ model Launch {
   launchDate   DateTime
   reused       Boolean
   youtubeId    String?
+  upcoming     Boolean
   rocket       Rocket   @relation(fields: [rocketId], references: [id])
 }

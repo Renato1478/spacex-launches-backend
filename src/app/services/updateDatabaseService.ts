@@ -66,23 +66,27 @@ const updateLaunchesService = async () => {
           where: { spacexId: launchData.id }, // Condição para encontrar o registro existente
           update: {
             name: launchData.name,
+            missionPatch: launchData.links.patch.small,
             success: launchData.success ? true : false,
             launchDate: new Date(launchData.date_utc),
             youtubeId: launchData.links.youtube_id,
             reused: wasReused,
             flightNumber: launchData.flight_number,
+            upcoming: launchData.upcoming,
             rocket: {
               connect: { spacexId: launchData.rocket }, // Substitua rocketId pelo ID do foguete associado
             },
           },
           create: {
             name: launchData.name,
+            missionPatch: launchData.links.patch.small,
             spacexId: launchData.id,
             success: launchData.success ? true : false,
             launchDate: new Date(launchData.date_utc),
             youtubeId: launchData.links.youtube_id,
             reused: wasReused,
             flightNumber: launchData.flight_number,
+            upcoming: launchData.upcoming,
             rocket: {
               connect: { spacexId: launchData.rocket }, // Substitua rocketId pelo ID do foguete associado
             },

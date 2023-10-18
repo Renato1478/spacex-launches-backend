@@ -1,9 +1,11 @@
 import { z } from "zod";
 import { buildJsonSchemas } from "fastify-zod";
+import { rocketSchema } from "./rocketSchema";
 
 // Single Launch
 const launchSchema = z.object({
   id: z.string(),
+  missionPatch: z.string().optional(),
   spacexId: z.string(),
   flightNumber: z.number().int(),
   name: z.string(),
@@ -12,6 +14,8 @@ const launchSchema = z.object({
   launchDate: z.date(),
   reused: z.boolean(),
   youtubeId: z.string().optional(),
+  upcoming: z.boolean(),
+  rocket: rocketSchema,
 });
 
 const launchesRequestSchema = z.object({

@@ -8,7 +8,7 @@ import { ListLaunchesRequestOptions } from "../schemas/launchSchema";
 const prisma = new PrismaClient();
 
 interface IWhereStatement {
-  OR?: any;
+  [key: string]: any;
 }
 
 class LaunchesController {
@@ -26,18 +26,26 @@ class LaunchesController {
       if (!page) page = 1; // Padrão para página 1
 
       // Construa a consulta do Prisma com base no parâmetro de pesquisa
-      const where: IWhereStatement = {};
+      const where: IWhereStatement = {
+        upcoming: false,
+      };
 
       if (search) {
+        console.log("search", search);
         where.OR = [
           { name: { contains: search } },
           { rocket: { name: { contains: search } } },
-          { success: search.toLowerCase() === "sucesso" },
         ];
       }
 
       const launches = await prisma.launch.findMany({
         where,
+        include: {
+          rocket: true,
+        },
+        orderBy: {
+          flightNumber: "desc",
+        },
         take: perPage,
         skip: perPage * (page - 1),
       });
